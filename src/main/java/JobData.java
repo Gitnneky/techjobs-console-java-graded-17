@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by LaunchCode
  */
 public class JobData {
+private final static Logger = Logger.getLogger(JobData.class.getName());
 
     private static final String DATA_FILE = "src/main/resources/job_data.csv";
     private static boolean isDataLoaded = false;
@@ -68,14 +71,16 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
-
+value = value.toLowerCase();
+value = value.trim().toLowerCase();
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue != null && aValue.toLowerCase().contains(value)) {
+            if (aValue != null && aValue.equalsIgnoreCase(value)){
                 jobs.add(row);
             }
         }
@@ -93,15 +98,36 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
+        loadData();{
 
         // TODO - implement this method
-        return null;
+       // return null;
     }
+ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        value = value.toLowerCase();
+        value = value.trim().toLowerCase();
 
+    for (HashMap<String, String> row : allJobs){
+        boolean jobAlreadyAdded = false;
+        for(map.Entry<String, String> entry: row.entrySet()){
+            if(entry.getValue() != null && entry.getValue().toLowerCase().contains(value)){
+                if (!jobAlreadyAdded){
+                    String entryValue = entry.getValue();
+                    if(entryValue != null && entryValue.toLowerCase().contains(value) && !jobAlreadyAdded){
+                        jobs.add(row);
+                        jobAlreadyAdded = true;
+                    }
+                }
+            }
+        }
+    }
+        return jobs;
     /**
      * Read in data from a CSV file and store it in a list
      */
     private static void loadData() {
+    public static void loadData(){
+
 
         // Only load data once
         if (isDataLoaded) {
@@ -114,7 +140,7 @@ public class JobData {
             Reader in = new FileReader(DATA_FILE);
             CSVParser parser = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
             List<CSVRecord> records = parser.getRecords();
-            Integer numberOfColumns = records.get(0).size();
+            Int numberOfColumns = records.get(0).size();
             String[] headers = parser.getHeaderMap().keySet().toArray(new String[numberOfColumns]);
 
             allJobs = new ArrayList<>();
@@ -134,8 +160,10 @@ public class JobData {
             isDataLoaded = true;
 
         } catch (IOException e) {
-            System.out.println("Failed to load job data");
-            e.printStackTrace();
+            Logger.log(Level.SEVERE, "Failed to load job data", e);
+        }
+//            System.out.println("Failed to load job data");
+//            e.printStackTrace();
         }
     }
 
