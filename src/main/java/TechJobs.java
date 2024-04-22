@@ -131,10 +131,10 @@ public class TechJobs {
 
         for (String key : job.keySet()){
 
-            System.out.println(key + ":" + job.get(key));
+            System.out.println(key + ": " + job.get(key));
         }
 
-        System.out.println("*****\n");
+        System.out.print("*****\n");
         }
         }}
 
