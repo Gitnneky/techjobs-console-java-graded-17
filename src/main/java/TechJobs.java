@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Created by LaunchCode
@@ -31,9 +34,9 @@ public class TechJobs {
 
             if (actionChoice == null) {
                 break;
-            } else if (actionChoice.equalsIgnoreCase("list")) {
+            } else if (actionChoice.equalsIgnoreCase("List")) {
 
-                String columnChoice = getUserSelection(("List", columnChoices);
+                String columnChoice = getUserSelection("List", columnChoices);
 
                 if ("all".equalsIgnoreCase(columnChoice)) {
                     printJobs(JobData.findAll());
@@ -42,8 +45,8 @@ public class TechJobs {
                     ArrayList<String> results = JobData.findAll(columnChoice);
                     Collections.sort(results);
 
-                    System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
-                    System.out.println("\n*** All" + columnChoices.get(columnChoice) + "Values***");
+
+                    System.out.print("\n*** All" + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
                     for (String item : results) {
@@ -54,8 +57,8 @@ public class TechJobs {
             } else { // choice is "search"
 
                 // How does the user want to search (e.g. by skill or employer)
-                String searchField = getUserSelection("Search by:", columnChoices);
 
+                String searchField = getUserSelection("Search by:", columnChoices);
                 // What is their search term?
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
@@ -73,7 +76,7 @@ public class TechJobs {
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
         int choiceIdx = -1;
-        Boolean validChoice = false;
+        boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
         // Put the choices in an ordered structure so we can
@@ -90,7 +93,7 @@ public class TechJobs {
 
             // Print available choices
             for (int j = 0; j < choiceKeys.length; j++) {
-                System.out.println(j + " - " + choices.get(choiceKeys[j]));
+                System.out.println( j + " - " + choices.get(choiceKeys[j]));
             }
 
             if (in.hasNextInt()) {
@@ -116,24 +119,22 @@ public class TechJobs {
         return choiceKeys[choiceIdx];
     }
 
-    // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+
     public static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
         if (someJobs.isEmpty()){
-            System.out.println("No Results");
             System.out.print("No Results");
             return;
         }
         for (HashMap<String, String> job : someJobs){
-            System.out.println("*****");
             System.out.println("\n*****");
 
         for (String key : job.keySet()){
+
             System.out.println(key + ":" + job.get(key));
         }
-        System.out.println("*****\n");
+
         System.out.println("*****\n");
         }
         }}
-}
+
